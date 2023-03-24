@@ -1,6 +1,6 @@
 package com.lefnds.loremshop.enums;
 
-public enum Size {
+public enum ProductSize {
 
     P,
     M,

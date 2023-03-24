@@ -4,6 +4,7 @@ import com.lefnds.loremshop.security.auth.dtos.AuthenticationResponseDTO;
 import com.lefnds.loremshop.security.auth.dtos.LoginRequestDTO;
 import com.lefnds.loremshop.security.auth.dtos.RegisterRequestDTO;
 import com.lefnds.loremshop.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,17 +22,13 @@ public class AuthenticationController {
     private UserService userService;
 
     @PostMapping( "/register" )
-    public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody RegisterRequestDTO userDto ) {
-
+    public ResponseEntity<AuthenticationResponseDTO> register(@RequestBody @Valid RegisterRequestDTO userDto ) {
         return ResponseEntity.status( HttpStatus.OK ).body( authenticationService.registry( userDto ) );
-
     }
 
     @PostMapping( "/authenticate" )
-    public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody LoginRequestDTO loginData ){
-
+    public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody @Valid LoginRequestDTO loginData ){
         return ResponseEntity.status( HttpStatus.OK ).body( authenticationService.authenticate( loginData ) );
-
     }
 
 }

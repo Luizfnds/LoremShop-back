@@ -8,6 +8,7 @@ import com.lefnds.loremshop.security.auth.dtos.RegisterRequestDTO;
 import com.lefnds.loremshop.enums.RoleName;
 import com.lefnds.loremshop.model.User;
 import com.lefnds.loremshop.repositories.UserRepository;
+import com.lefnds.loremshop.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,7 +23,7 @@ import java.util.Arrays;
 public class AuthenticationService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
     @Autowired
     private TokenService tokenService;
     @Autowired
@@ -32,9 +33,8 @@ public class AuthenticationService {
     @Autowired
     private RoleRepository roleRepository;
 
-    @Transactional
     public AuthenticationResponseDTO registry( RegisterRequestDTO userDto ) {
-        if( userRepository.findByEmail( userDto.getEmail() ).isPresent() ) {
+        if( userService.findByEmail( userDto.getEmail() ).isPresent() ) {
             throw new EmailAlreadyInUseException();
         }
         User user = User.builder()
@@ -45,7 +45,7 @@ public class AuthenticationService {
                 .roles( Arrays.asList(roleRepository.findByRoleName(RoleName.ROLE_USER).get()) )
                 .build();
 
-        userRepository.save( user );
+        userService.save( user );
         String token = tokenService.generateToken( user );
 
         return AuthenticationResponseDTO.builder()
@@ -59,10 +59,8 @@ public class AuthenticationService {
         );
 
         authenticationManager.authenticate( usernamePasswordAuthenticationToken );
-
-        User user = userRepository.findByEmail( loginDataDto.getEmail() )
+        User user = userService.findByEmail( loginDataDto.getEmail() )
                 .orElseThrow(  );
-
         String token = tokenService.generateToken( user );
 
         return AuthenticationResponseDTO.builder()

@@ -1,6 +1,5 @@
 package com.lefnds.loremshop.security.auth;
 
-import com.lefnds.loremshop.model.User;
 import com.lefnds.loremshop.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,8 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
-
 @Configuration
 @AllArgsConstructor
 public class ApplicationConfig {
@@ -24,36 +21,26 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-
         return username -> userRepository.findByEmail( username )
                 .orElseThrow( () -> new UsernameNotFoundException( "User not found" ) );
-
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-
         return new BCryptPasswordEncoder();
-
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
         authProvider.setUserDetailsService( userDetailsService() );
         authProvider.setPasswordEncoder( passwordEncoder() );
-
         return authProvider;
-
     }
 
     @Bean
     public AuthenticationManager authenticationManager( AuthenticationConfiguration authenticationConfig ) throws Exception {
-
         return authenticationConfig.getAuthenticationManager();
-
     }
 
 }

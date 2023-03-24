@@ -28,6 +28,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping(path = "/user")
 public class UserController {
 
@@ -35,11 +36,6 @@ public class UserController {
     private UserService userService;
     @Autowired
     private TokenService tokenService;
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleRepository roleRepository;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/all")
@@ -55,7 +51,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     public ResponseEntity< UserResponseDto > findUser( @RequestHeader( "Authorization" ) String token ) {
-        User user = userRepository.findByEmail( tokenService.getSubject( token ) ).get();
+        User user = userService.findByEmail( tokenService.getSubject( token ) ).get();
         UserResponseDto userResponseDto = userService.userToUserResponseDto( user );
 
         return ResponseEntity.status(HttpStatus.OK).body( userResponseDto );
@@ -65,12 +61,11 @@ public class UserController {
     @PutMapping
     public ResponseEntity< UserResponseDto > alterUserById(@RequestHeader( "Authorization" ) String token,
                                                            @RequestBody @Valid UserRequestDto userRequestDTO ) {
-        User user = userRepository.findByEmail( tokenService.getSubject( token ) )
+        User user = userService.findByEmail( tokenService.getSubject( token ) )
                 .orElseThrow();
 
         user.setName( userRequestDTO.getName() );
         user.setSurname( userRequestDTO.getSurname() );
-//        user.setEmail( userRequestDTO.getEmail() );
 
         userService.save( user );
         UserResponseDto userResponseDto = userService.userToUserResponseDto( user );
@@ -81,7 +76,7 @@ public class UserController {
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
     @DeleteMapping
     public ResponseEntity<String> deleteUser(@RequestHeader("Authorization") String token) {
-        User user = userRepository.findByEmail(tokenService.getSubject(token)).get();
+        User user = userService.findByEmail(tokenService.getSubject(token)).get();
         userService.delete(user);
 
         return ResponseEntity.status(HttpStatus.OK).body("User deleted successfully");

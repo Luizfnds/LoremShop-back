@@ -1,6 +1,7 @@
 package com.lefnds.loremshop.controllers;
 
 import com.lefnds.loremshop.dtos.Request.ProductRequestDto;
+import com.lefnds.loremshop.dtos.Request.FilterRequestDto;
 import com.lefnds.loremshop.model.Product;
 import com.lefnds.loremshop.services.ProductService;
 import jakarta.validation.Valid;
@@ -15,10 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/product")
 public class ProductController {
 
@@ -26,8 +27,11 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Page<Product>> findAllProducts( @PageableDefault(page = 0, size = 10,sort = "productId", direction = Sort.Direction.ASC) Pageable pageable ) {
-        return ResponseEntity.status(HttpStatus.OK).body( productService.findAll(pageable) );
+    public ResponseEntity<Page<Product>> findAllProducts(@RequestParam(required = false, name = "productName") @Valid String productName,
+                                                         @RequestBody(required = false) @Valid List<FilterRequestDto> filterRequestDtoList,
+                                                         @PageableDefault(page = 0, size = 10,sort = "productId", direction = Sort.Direction.ASC) Pageable pageable ) {
+
+        return ResponseEntity.status(HttpStatus.OK).body( productService.findAllProducts(productName, filterRequestDtoList, pageable) );
     }
 
     @GetMapping("/{id}")

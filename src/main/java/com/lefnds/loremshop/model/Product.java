@@ -1,6 +1,8 @@
 package com.lefnds.loremshop.model;
 
-import com.lefnds.loremshop.enums.Size;
+import com.lefnds.loremshop.enums.ProductGender;
+import com.lefnds.loremshop.enums.ProductSize;
+import com.lefnds.loremshop.enums.ProductType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,8 +28,14 @@ public class Product {
     @Column
     private BigDecimal value;
     @Column
+    private String type;
+    @Column
+    private String size;
+    @Column
+    private String gender;
+    @Column
     private Integer amount;
-    @Enumerated( EnumType.STRING )
-    private Size size;
+    @Column
+    private byte[] image;
 
 }

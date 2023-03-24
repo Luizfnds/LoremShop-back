@@ -1,6 +1,10 @@
 package com.lefnds.loremshop.dtos.Request;
 
-import com.lefnds.loremshop.enums.Size;
+import com.lefnds.loremshop.enums.ProductGender;
+import com.lefnds.loremshop.enums.ProductSize;
+import com.lefnds.loremshop.enums.ProductType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -26,6 +30,16 @@ public class ProductRequestDto {
     @NotNull
     private Integer amount;
     @NotBlank
+    @NotNull
+    private ProductType type;
+    @NotBlank
+    @NotNull
+    private ProductSize size;
+    @NotBlank
+    @NotNull
+    private ProductGender gender;
+    @NotBlank
+    @NotNull
     @Max(1)
-    private Size size;
+    private ProductSize productSize;
 }

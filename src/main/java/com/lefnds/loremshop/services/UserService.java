@@ -29,12 +29,14 @@ public class UserService {
         return userRepository.findById( id );
     }
 
-    @Transactional
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
     public User save( User user ) {
         return userRepository.save( user );
     }
 
-    @Transactional
     public void delete(User user) {
         userRepository.delete(user);
     }
