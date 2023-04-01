@@ -28,10 +28,30 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<Page<Product>> findAllProducts(@RequestParam(required = false, name = "productName") @Valid String productName,
-                                                         @RequestBody(required = false) @Valid List<FilterRequestDto> filterRequestDtoList,
-                                                         @PageableDefault(page = 0, size = 10,sort = "productId", direction = Sort.Direction.ASC) Pageable pageable ) {
+                                                         @RequestParam(required = false, name = "filterList") String filterStringList,
+                                                         @PageableDefault(page = 0, size = 10,sort = "productId", direction = Sort.Direction.ASC) Pageable pageable) {
 
-        return ResponseEntity.status(HttpStatus.OK).body( productService.findAllProducts(productName, filterRequestDtoList, pageable) );
+        if (productName != null) {
+            if(productName.equals("undefined")) productName = "";
+        }
+        List<FilterRequestDto> filterDtoList = new ArrayList<>();
+
+        if(filterStringList != null) {
+            List<String> filterStringList2 = Arrays.asList(filterStringList.split("----"));
+            if(filterStringList.isEmpty()) {
+                for (String filter : filterStringList2) {
+                    List<String> list = List.of(filter.split("---"));
+                    if (!list.get(1).isEmpty()) {
+                        filterDtoList.add(FilterRequestDto.builder()
+                                .filterName(list.get(0))
+                                .filterList(List.of(list.get(1).split("--")))
+                                .build());
+                    }
+                }
+            }
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body( productService.findAllProducts(productName, filterDtoList, pageable) );
     }
 
     @GetMapping("/{id}")

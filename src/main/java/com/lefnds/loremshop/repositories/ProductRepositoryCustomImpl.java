@@ -5,6 +5,7 @@ import com.lefnds.loremshop.enums.ProductType;
 import com.lefnds.loremshop.model.Product;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.domain.*;
@@ -27,7 +28,6 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
         Root<Product> product = query.from(Product.class);
 
         List<Predicate> predicatesList = new ArrayList<>();
-        Sort sort = pageable.getSort();
 
         if (filterRequestDtoList != null) {
             for (FilterRequestDto filterRequestDto : filterRequestDtoList) {
@@ -48,11 +48,15 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
             }
         }
 
+        Sort sort = (!pageable.getSort().toString().equals("undefined: ASC")) ? pageable.getSort() : Sort.by("productId");
+        int page = pageable.getPageNumber();
+        int size = pageable.getPageSize();
+
         query.select(product)
                 .where(cb.and(predicatesList.toArray(new Predicate[predicatesList.size()])))
                 .orderBy(QueryUtils.toOrders(sort, product, cb));
 
-        return new PageImpl<>(entityManager.createQuery(query).getResultList());
+        return new PageImpl<>(entityManager.createQuery(query).setFirstResult(page).setMaxResults(size).getResultList());
     }
 
 }

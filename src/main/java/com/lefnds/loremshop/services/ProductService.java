@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -22,7 +23,7 @@ public class ProductService {
 
     public Page<Product> findAllProducts(String productName, List<FilterRequestDto> filterRequestDtoList, Pageable pageable) {
         List<Product> list = productRepository.findAllProducts(productName, filterRequestDtoList, pageable).stream().toList();
-        list.stream().map(p -> convertByteaForBase64(p.getImage()));
+        list.stream().forEach(product -> product.setImage(convertByteaForBase64(product.getImage())));
         return new PageImpl<>(list);
     }
 
