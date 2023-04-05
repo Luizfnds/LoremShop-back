@@ -2,13 +2,10 @@ package com.lefnds.loremshop.controllers;
 
 import com.lefnds.loremshop.dtos.Request.UserRequestDto;
 import com.lefnds.loremshop.dtos.Response.UserResponseDto;
-import com.lefnds.loremshop.enums.RoleName;
-import com.lefnds.loremshop.model.Role;
 import com.lefnds.loremshop.model.User;
-import com.lefnds.loremshop.repositories.RoleRepository;
-import com.lefnds.loremshop.repositories.UserRepository;
 import com.lefnds.loremshop.security.auth.TokenService;
 import com.lefnds.loremshop.services.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,17 +16,12 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping(path = "/user")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired

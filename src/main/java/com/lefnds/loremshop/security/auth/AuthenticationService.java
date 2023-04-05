@@ -49,7 +49,9 @@ public class AuthenticationService {
         String token = tokenService.generateToken( user );
 
         return AuthenticationResponseDTO.builder()
-                .token( token )
+                .name("token")
+                .value(token)
+                .expiration(tokenService.decodeToken(token).getExpiration().getTime())
                 .build();
     }
 
@@ -64,7 +66,9 @@ public class AuthenticationService {
         String token = tokenService.generateToken( user );
 
         return AuthenticationResponseDTO.builder()
-                .token( token )
+                .name("token")
+                .value(token)
+                .expiration(tokenService.decodeToken(token).getExpiration().getTime())
                 .build();
 
     }

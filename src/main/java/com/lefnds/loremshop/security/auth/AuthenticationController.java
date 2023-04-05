@@ -4,11 +4,17 @@ import com.lefnds.loremshop.security.auth.dtos.AuthenticationResponseDTO;
 import com.lefnds.loremshop.security.auth.dtos.LoginRequestDTO;
 import com.lefnds.loremshop.security.auth.dtos.RegisterRequestDTO;
 import com.lefnds.loremshop.services.UserService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,8 +33,17 @@ public class AuthenticationController {
     }
 
     @PostMapping( "/authenticate" )
-    public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody @Valid LoginRequestDTO loginData ){
-        return ResponseEntity.status( HttpStatus.OK ).body( authenticationService.authenticate( loginData ) );
+    public ResponseEntity<Object> authenticate(@RequestBody @Valid LoginRequestDTO loginData,
+                                               HttpServletResponse response){
+        if(userService.findByEmail(loginData.getEmail()).isEmpty()) {
+            return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Email not registered" );
+        }
+
+//        Cookie cookie = new Cookie("token", token.getToken());
+//        cookie.setSecure(false);
+//        response.addCookie(cookie);
+
+        return ResponseEntity.status( HttpStatus.OK ).body( authenticationService.authenticate(loginData) );
     }
 
 }

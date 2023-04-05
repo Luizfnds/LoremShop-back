@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping("/product")
 public class ProductController {
 
@@ -49,8 +48,6 @@ public class ProductController {
                 }
             }
         }
-
-        System.out.println(filterDtoList);
 
         return ResponseEntity.status(HttpStatus.OK).body( productService.findAllProducts(productName, filterDtoList, pageable) );
     }

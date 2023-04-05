@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers( "/auth/**", "/product/**" ).permitAll()
+                .authorizeHttpRequests().requestMatchers( "/auth/**", "/product/**", "/user" ).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS )
