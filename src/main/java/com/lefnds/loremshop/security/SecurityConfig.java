@@ -26,10 +26,12 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain( HttpSecurity http ) throws Exception {
 
         return http
+                .cors()
+                .and()
                 .httpBasic()
                 .and()
                 .csrf().disable()
-                .authorizeHttpRequests().requestMatchers( "/auth/**", "/product/**", "/user" ).permitAll()
+                .authorizeHttpRequests().requestMatchers( "/auth/**", "/product/**" ).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS )
