@@ -2,6 +2,7 @@ package com.lefnds.loremshop.services;
 
 import com.lefnds.loremshop.model.Order;
 import com.lefnds.loremshop.model.OrderItem;
+import com.lefnds.loremshop.model.User;
 import com.lefnds.loremshop.repositories.OrderItemRepository;
 import com.lefnds.loremshop.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,7 @@ public class OrderService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
-    public List<Order> findAll() {
-        return orderRepository.findAll();
-    }
-
-    public List<OrderItem> findOrderItemByOrderId(Order order) {
-        return orderItemRepository.findOrderItemByOrderId(order);
+    public List<Order> findAllUserOrders(User user) {
+        return orderRepository.findAllUserOrders(user);
     }
 }

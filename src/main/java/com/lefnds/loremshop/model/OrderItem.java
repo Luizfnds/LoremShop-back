@@ -25,6 +25,9 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="product_id", nullable=false)
     private Product product;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="cart_id")
+    private Cart cart;
     @Column(nullable = false)
     private Integer quantity;
 
