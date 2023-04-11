@@ -1,28 +1,28 @@
 package com.lefnds.loremshop.model;
 
-import com.lefnds.loremshop.enums.ProductGender;
-import com.lefnds.loremshop.enums.ProductSize;
-import com.lefnds.loremshop.enums.ProductType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
-@Data
-@Entity
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Entity
 @Table(name = "tb_product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID productId;
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<OrderItem> item;
     @Column
     private String name;
     @Column
