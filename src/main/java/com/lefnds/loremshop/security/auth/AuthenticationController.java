@@ -39,10 +39,6 @@ public class AuthenticationController {
             return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Email not registered" );
         }
 
-//        Cookie cookie = new Cookie("token", token.getToken());
-//        cookie.setSecure(false);
-//        response.addCookie(cookie);
-
         return ResponseEntity.status( HttpStatus.OK ).body( authenticationService.authenticate(loginData) );
     }
 

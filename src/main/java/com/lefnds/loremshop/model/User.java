@@ -34,7 +34,7 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
     @OneToOne(mappedBy = "user")
-    private Cart cart;
+    private Cart cart = new Cart();
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Order> orders;
