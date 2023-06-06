@@ -11,9 +11,9 @@ import java.util.UUID;
 
 @Repository
 @Transactional
-public interface CartRepository extends JpaRepository<Cart, UUID> {
+public interface CartRepository extends JpaRepository< Cart, UUID > {
 
-    @Query("SELECT e FROM Cart e WHERE e.user = ?1")
-    Cart findUserCart(User user);
+    @Query( "SELECT e FROM Cart e WHERE e.user = ?1" )
+    Cart findUserCart( User user );
 
 }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -18,24 +17,23 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public Page<Product> findAllProducts(String productName, List<FilterRequestDto> filterRequestDtoList, Pageable pageable) {
-        List<Product> list = productRepository.findAllProducts(productName, filterRequestDtoList, pageable).stream().toList();
-        //list.forEach(product -> product.setImage(convertByteaForBase64(product.getImage())));
-        return new PageImpl<>(list);
+    public Page<Product> findAllProducts( String productName,
+                                          List<FilterRequestDto> filterRequestDtoList,
+                                          Pageable pageable) {
+        //List<Product> list = productRepository.findAllProducts( productName, filterRequestDtoList, pageable ).stream().toList();
+        return productRepository.findAllProducts( productName, filterRequestDtoList, pageable );
     }
 
-    public Optional<Product> findById(UUID productId) {
-        Optional<Product> product = productRepository.findById(productId);
-        //product.get().setImage(convertByteaForBase64(product.get().getImage()));
-        return product;
+    public Optional<Product> findById( UUID productId ) {
+        return productRepository.findById( productId );
     }
 
-    public Product save (Product product) {
-        return productRepository.save(product);
+    public Product save ( Product product ) {
+        return productRepository.save( product );
     }
 
-    public void delete (Product product) {
-        productRepository.delete(product);
+    public void delete ( Product product ) {
+        productRepository.delete( product );
     }
 
 //    private byte[] convertByteaForBase64(byte[] bytea) {

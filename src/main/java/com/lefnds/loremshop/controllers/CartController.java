@@ -4,6 +4,7 @@ import com.lefnds.loremshop.dtos.Request.AlterOrderItemDTO;
 import com.lefnds.loremshop.dtos.Request.OrderItemDTO;
 import com.lefnds.loremshop.dtos.Response.TextResponseDTO;
 import com.lefnds.loremshop.model.*;
+import com.lefnds.loremshop.repositories.OrderItemRepository;
 import com.lefnds.loremshop.security.auth.TokenService;
 import com.lefnds.loremshop.services.CartService;
 import com.lefnds.loremshop.services.UserService;
@@ -26,6 +27,8 @@ public class CartController {
     private UserService userService;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @GetMapping
     public ResponseEntity<Cart> findAllUserItemsOnCart( @RequestHeader( "Authorization" ) String token ) {
@@ -50,6 +53,7 @@ public class CartController {
                                                     @PathVariable UUID orderItemId ) {
         User user = userService.findByEmail( tokenService.getSubject( token ) ).get();
         cartService.deleteItemOnCart(user, orderItemId);
+        orderItemRepository.delete(orderItemRepository.findById(orderItemId).get());
         return ResponseEntity.status( HttpStatus.OK ).body( TextResponseDTO.builder().message("Product deleted successfully").build() );
     }
 }

@@ -28,7 +28,7 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<Page<Product>> findAllProducts(@RequestParam(required = false, name = "productName") @Valid String productName,
                                                          @RequestParam(required = false, name = "filterList") String filterStringList,
-                                                         @PageableDefault(page = 0, size = 10,sort = "productId", direction = Sort.Direction.ASC) Pageable pageable) {
+                                                         @PageableDefault(page = 0 , size = 9, sort = "productId" , direction=Sort.Direction.ASC) Pageable pageable) {
 
         List<FilterRequestDto> filterDtoList = new ArrayList<>();
 

@@ -5,6 +5,7 @@ import com.lefnds.loremshop.enums.Status;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,5 +30,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(nullable=false)
     private Status status;
+    @Column
+    private BigDecimal totalValue;
 
 }

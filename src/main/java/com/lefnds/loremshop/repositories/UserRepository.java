@@ -10,8 +10,8 @@ import java.util.UUID;
 
 @Repository
 @Transactional
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends JpaRepository< User, UUID > {
 
-    Optional<User> findByEmail(String email);
+    Optional< User > findByEmail( String email );
 
 }

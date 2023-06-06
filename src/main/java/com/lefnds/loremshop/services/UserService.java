@@ -4,7 +4,6 @@ import com.lefnds.loremshop.dtos.Response.UserResponseDto;
 import com.lefnds.loremshop.security.auth.TokenService;
 import com.lefnds.loremshop.model.User;
 import com.lefnds.loremshop.repositories.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,19 +28,19 @@ public class UserService {
         return userRepository.findById( id );
     }
 
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<User> findByEmail( String email ) {
+        return userRepository.findByEmail( email );
     }
 
     public User save( User user ) {
         return userRepository.save( user );
     }
 
-    public void delete(User user) {
-        userRepository.delete(user);
+    public void delete( User user ) {
+        userRepository.delete( user );
     }
 
-    public UserResponseDto userToUserResponseDto(User user ) {
+    public UserResponseDto userToUserResponseDto( User user ) {
         return  UserResponseDto.builder()
                 .name( user.getName() )
                 .surname( user.getSurname() )

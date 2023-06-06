@@ -33,9 +33,9 @@ public class Product {
     private String size;
     @Column
     private String gender;
+//    @Column
+//    private Integer amount;
     @Column
-    private Integer amount;
-    @Column
-    private byte[] image;
+    private String image;
 
 }

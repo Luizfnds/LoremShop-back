@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface ProductRepositoryCustom {
 
-    Page<Product> findAllProducts(String productName, List<FilterRequestDto> filterRequestDtoList, Pageable pageable);
+    Page<Product> findAllProducts( String productName,
+                                   List<FilterRequestDto> filterRequestDtoList,
+                                   Pageable pageable );
 
 }
