@@ -49,9 +49,8 @@ public class AuthenticationController {
 
         ResponseCookie cookie = ResponseCookie.from("token", token)
                 .httpOnly(false)
-                .secure(false)
-                .sameSite("Lax")
-                .domain("vercel.com")
+                .secure(true)
+                .sameSite("None")
                 .path("/")
                 .maxAge(Duration.ofMillis(tokenExp - tokenIat))
                 .build();
