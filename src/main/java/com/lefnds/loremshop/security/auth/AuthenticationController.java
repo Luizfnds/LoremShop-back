@@ -51,7 +51,6 @@ public class AuthenticationController {
                 .httpOnly(false)
                 .secure(true)
                 .sameSite("None")
-                .domain("lorem-shop-gules.vercel.app")
                 .path("/")
                 .maxAge(Duration.ofMillis(tokenExp - tokenIat))
                 .build();
