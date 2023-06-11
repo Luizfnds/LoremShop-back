@@ -50,7 +50,8 @@ public class AuthenticationController {
         ResponseCookie cookie = ResponseCookie.from("token", token)
                 .httpOnly(false)
                 .secure(true)
-                .sameSite("Strict")
+                .sameSite("None")
+                .domain("lorem-shop-gules.vercel.app")
                 .path("/")
                 .maxAge(Duration.ofMillis(tokenExp - tokenIat))
                 .build();
