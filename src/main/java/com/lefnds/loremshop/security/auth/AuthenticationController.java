@@ -48,7 +48,7 @@ public class AuthenticationController {
         long tokenIat = tokenService.decodeToken(token).getIssuedAt().getTime();
 
         ResponseCookie cookie = ResponseCookie.from("token", token)
-                .httpOnly(false)
+                .httpOnly(true)
                 .secure(true)
                 .sameSite("None")
                 .path("/")
