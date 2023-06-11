@@ -9,6 +9,7 @@ import com.lefnds.loremshop.enums.RoleName;
 import com.lefnds.loremshop.model.User;
 import com.lefnds.loremshop.repositories.UserRepository;
 import com.lefnds.loremshop.services.UserService;
+import jakarta.servlet.http.Cookie;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -55,7 +56,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponseDTO authenticate(LoginRequestDTO loginDataDto ) {
+    public String /*AuthenticationResponseDTO*/ authenticate( LoginRequestDTO loginDataDto ) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDataDto.getEmail() , loginDataDto.getPassword()
         );
@@ -65,11 +66,13 @@ public class AuthenticationService {
                 .orElseThrow(  );
         String token = tokenService.generateToken( user );
 
-        return AuthenticationResponseDTO.builder()
-                .name("token")
-                .value(token)
-                .expiration(tokenService.decodeToken(token).getExpiration().getTime())
-                .build();
+        return token;
+
+//        return AuthenticationResponseDTO.builder()
+//                .name("token")
+//                .value(token)
+//                .expiration(tokenService.decodeToken(token).getExpiration().getTime())
+//                .build();
 
     }
 }
