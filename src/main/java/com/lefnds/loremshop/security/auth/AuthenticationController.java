@@ -50,7 +50,7 @@ public class AuthenticationController {
         ResponseCookie cookie = ResponseCookie.from("token", token)
                 .httpOnly(false)
                 .secure(false)
-                .sameSite("Lax")
+                .sameSite("Strict")
                 .path("/")
                 .maxAge(Duration.ofMillis(tokenExp - tokenIat))
                 .build();
