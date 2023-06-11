@@ -48,11 +48,11 @@ public class AuthenticationController {
         long tokenIat = tokenService.decodeToken(token).getIssuedAt().getTime();
 
         ResponseCookie cookie = ResponseCookie.from("token", token)
-                .httpOnly(false)
-                //.secure(true)
-                //.sameSite("None")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
                 .path("/")
-                //.domain("https://lorem-shop-gules.vercel.app")
+                .domain("https://lorem-shop-gules.vercel.app")
                 .maxAge(Duration.ofMillis(tokenExp - tokenIat))
                 .build();
 
