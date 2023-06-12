@@ -13,8 +13,8 @@ public class CorsConfig implements WebMvcConfigurer {
                 //.allowedOrigins("http://localhost:4200/")
                 .allowedOrigins("https://lorem-shop-gules.vercel.app")
                 .allowCredentials(true)
-                //.allowedHeaders("*")
-                //.exposedHeaders("Set-Cookie")
+                .allowedHeaders("*")
+                .exposedHeaders("Set-Cookie")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
     }
 }

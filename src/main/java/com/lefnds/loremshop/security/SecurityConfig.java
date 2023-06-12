@@ -27,8 +27,8 @@ public class SecurityConfig {
 
         return http
                 .cors()
-//                .and()
-//                .httpBasic()
+                .and()
+                .httpBasic()
                 .and()
                 .csrf().disable()
                 .authorizeHttpRequests().requestMatchers( "/auth/**", "/product/**" ).permitAll()
