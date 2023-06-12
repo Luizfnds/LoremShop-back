@@ -56,7 +56,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public String /*AuthenticationResponseDTO*/ authenticate( LoginRequestDTO loginDataDto ) {
+    public AuthenticationResponseDTO authenticate( LoginRequestDTO loginDataDto ) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                 loginDataDto.getEmail() , loginDataDto.getPassword()
         );
@@ -66,13 +66,11 @@ public class AuthenticationService {
                 .orElseThrow(  );
         String token = tokenService.generateToken( user );
 
-        return token;
-
-//        return AuthenticationResponseDTO.builder()
-//                .name("token")
-//                .value(token)
-//                .expiration(tokenService.decodeToken(token).getExpiration().getTime())
-//                .build();
+        return AuthenticationResponseDTO.builder()
+                .name("token")
+                .value(token)
+                .expiration(tokenService.decodeToken(token).getExpiration().getTime())
+                .build();
 
     }
 }

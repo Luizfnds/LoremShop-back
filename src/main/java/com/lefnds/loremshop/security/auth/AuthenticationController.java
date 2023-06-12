@@ -41,24 +41,8 @@ public class AuthenticationController {
         if(userService.findByEmail(loginData.getEmail()).isEmpty()) {
             return ResponseEntity.status( HttpStatus.NOT_FOUND ).body( "Email not registered" );
         }
-
-        String token = authenticationService.authenticate(loginData);
-
-        long tokenExp = tokenService.decodeToken(token).getExpiration().getTime();
-        long tokenIat = tokenService.decodeToken(token).getIssuedAt().getTime();
-
-        ResponseCookie cookie = ResponseCookie.from("token", token)
-                .httpOnly(false)
-                .secure(false)
-                .sameSite("None")
-                .path("/")
-                .domain("lorem-shop-gules.vercel.app")
-                .maxAge(Duration.ofMillis(tokenExp - tokenIat))
-                .build();
-
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-
-        return ResponseEntity.status( HttpStatus.OK ).body(TextResponseDTO.builder().message("sla").build());
+        
+        return ResponseEntity.status( HttpStatus.OK ).body( authenticationService.authenticate(loginData) );
     }
 
 }
