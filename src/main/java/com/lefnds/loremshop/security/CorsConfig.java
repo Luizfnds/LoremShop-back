@@ -11,9 +11,9 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 //.allowedOrigins("http://localhost:4200/")
-                .allowedOrigins("https://lorem-shop-gules.vercel.app/")
+                .allowedOrigins("https://lorem-shop-gules.vercel.app")
                 .allowCredentials(true)
-                .allowedHeaders("*")
+                //.allowedHeaders("*")
                 //.exposedHeaders("Set-Cookie")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT");
     }
