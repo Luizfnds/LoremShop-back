@@ -49,7 +49,7 @@ public class AuthenticationController {
 
         ResponseCookie cookie = ResponseCookie.from("token", token)
                 //.httpOnly(true)
-                //.secure(true)
+                .secure(true)
                 .sameSite("None")
                 .path("/")
                 //.domain("lorem-shop-gules.vercel.app")
